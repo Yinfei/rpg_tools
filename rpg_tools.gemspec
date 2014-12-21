@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = %q{RpgTools}
-  s.version     = '0.1.0'
+  s.version     = '0.2.0'
   s.author      = 'Yohan Piron'
   s.email       = 'yinfei84@gmail.com'
   s.date        = %q{2014-12-18}
@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.description = 'RpgTools gives you tools for your RPGs : dices, coins, cards...'
   s.homepage    = 'https://github.com/Yinfei/rpg_tools.git'
   s.license     = 'MIT'
-  s.files       = [
-    'lib/rpg_tools.rb'
-  ]
+  s.files       = `git ls-files`.split("\n")
+  s.test_files    = s.files.grep(%r{^(spec)/})
   s.require_paths = ['lib']
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rake', '~> 3.1'
+  s.add_development_dependency 'rspec', '~> 3.0'
 end
