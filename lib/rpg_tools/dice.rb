@@ -4,10 +4,12 @@ module RpgTools
       def roll(arg)
         dices_num = arg.split(/d/i).first.to_i
         max_value = arg.split(/d/i).last.to_i
-        max_value + 1 if max_value < 2
 
         # I mean, seriously ?
-        return nil if dices_num.zero?
+        return true if dices_num.zero?
+
+        # We don't roll d0 and d1 for obvious reasons.
+        return true if [0, 1].include?(max_value)
 
         [].tap do |dice_set|
           dices_num.times do
