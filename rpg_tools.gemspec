@@ -11,6 +11,6 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.test_files    = s.files.grep(%r{^(spec)/})
   s.require_paths = ['lib']
-  s.add_development_dependency 'rake', '~> 3.1'
+  s.add_development_dependency 'rake', '~> 10.4'
   s.add_development_dependency 'rspec', '~> 3.0'
 end
