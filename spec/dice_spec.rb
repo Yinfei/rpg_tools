@@ -28,7 +28,7 @@ describe RpgTools::Dice do
   end
 
   it 'rolls a dice with a malus' do
-    expect(described_class.roll('1d6-2').count).to eq(1)
+    expect(described_class.roll('1D6-2').count).to eq(1)
   end
 
   it "doesn't roll a dice with an odd symbol" do

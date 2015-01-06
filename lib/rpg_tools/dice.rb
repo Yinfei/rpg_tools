@@ -15,11 +15,11 @@ module RpgTools
         return standard_roll(dices, max_value) if dice =~ /^\d+[Dd]\d+$/
 
         # We apply bonuses/maluses properly if any
-        if dice =~ /^\d+d\d+(\+)(\d+)/
-          bonus = dice.gsub(/^\d+d\d+(\+)/, '').to_i
+        if dice =~ /^\d+[Dd]\d+(\+)(\d+)/
+          bonus = dice.gsub(/^\d+[Dd]\d+(\+)/, '').to_i
           roll_with_bonus(dices, max_value, bonus)
-        elsif dice =~ /^\d+d\d+(\-)(\d+)/
-          malus = dice.gsub(/^\d+d\d+(\-)/, '').to_i
+        elsif dice =~ /^\d+[Dd]\d+(\-)(\d+)/
+          malus = dice.gsub(/^\d+[Dd]\d+(\-)/, '').to_i
           roll_with_malus(dices, max_value, malus)
         else
           true
