@@ -1,54 +1,55 @@
 module RpgTools
   class Dice
-    class << self
-      def roll(dice)
-        dices = dice.split(/d/i).first.to_i
-        max_value = dice.split(/d/i).last.to_i
+    attr_accessor :base, :sides, :value, :type, :rolls, :bonus, :malus
 
-        # I mean, seriously ?
-        return true if dices.zero?
+    def initialize(base)
+      @base  = base
+      @value = nil
+      @type  = (@base =~ /^.[fF]$/).nil? ? 'Standard' : 'Fudge'
+      @sides = @type == 'Fudge' ? 3 : base.gsub(/^./, '').to_i
+      @rolls = 0
+      check_sides
+      set_modifiers if @type == 'Standard'
+    end
 
-        # We don't roll d0 and d1 for obvious reasons.
-        return true if [0, 1].include?(max_value)
+    def roll
+      return fudge_roll      if @type == 'fudge'
+      return standard_roll   if @bonus.nil? && @malus.nil?
+      return roll_with_bonus if @malus.nil?
+      return roll_with_malus if @bonus.nil?
+    end
 
-        # We do a normal roll if no bonus/malus is set on the dice
-        return standard_roll(dices, max_value) if dice =~ /^\d+[Dd]\d+$/
+    private
 
-        # We apply bonuses/maluses properly if any
-        if dice =~ /^\d+[Dd]\d+(\+)(\d+)/
-          bonus = dice.gsub(/^\d+[Dd]\d+(\+)/, '').to_i
-          roll_with_bonus(dices, max_value, bonus)
-        elsif dice =~ /^\d+[Dd]\d+(\-)(\d+)/
-          malus = dice.gsub(/^\d+[Dd]\d+(\-)/, '').to_i
-          roll_with_malus(dices, max_value, malus)
-        else
-          true
-        end
+    def set_modifiers
+      @bonus = (@base =~ /[Dd]\d+\+(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\+/, '').to_i
+      @malus = (@base =~ /[Dd]\d+\-(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\-/, '').to_i
+    end
+
+    def check_sides
+      if [0, 1].include?(@sides)
+        raise ArgumentError.new("You can't create dices with less than 2 sides.")
       end
+    end
 
-      def standard_roll(dices, max_value)
-        [].tap do |dice_set|
-          dices.times do
-            dice_set << rand(1..max_value)
-          end
-        end
-      end
+    def fudge_roll
+      @rolls += 1
+      @value = rand(1..3) - 2
+    end
 
-      def roll_with_bonus(dices, max_value, bonus)
-        [].tap do |dice_set|
-          dices.times do
-            dice_set << (rand(1..max_value) + bonus)
-          end
-        end
-      end
+    def standard_roll
+      @rolls += 1
+      @value = rand(1..@sides)
+    end
 
-      def roll_with_malus(dices, max_value, malus)
-        [].tap do |dice_set|
-          dices.times do
-            dice_set << (rand(1..max_value) - malus)
-          end
-        end
-      end
+    def roll_with_bonus
+      @rolls += 1
+      @value = rand(1..@sides) + @bonus
+    end
+
+    def roll_with_malus
+      @rolls += 1
+      @value = rand(1..@sides) - @malus
     end
   end
 end
