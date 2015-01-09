@@ -1,9 +1,20 @@
 module RpgTools
   class Coin
-    class << self
-      def flip
-        rand(2) == 1 ? 'heads' : 'tails'
-      end
+    attr_accessor :value, :flips, :heads, :tails
+
+    def initialize
+      @value = nil
+      @flips = 0
+      @heads = 0
+      @tails = 0
+    end
+
+    def flip
+      @value = rand(2) == 1 ? 'heads' : 'tails'
+      @flips += 1
+      @heads += 1 if @value == 'heads'
+      @tails += 1 if @value == 'tails'
+      @value
     end
   end
 end
