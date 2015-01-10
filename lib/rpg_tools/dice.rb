@@ -13,7 +13,7 @@ module RpgTools
     end
 
     def roll
-      return fudge_roll      if @type == 'fudge'
+      return fudge_roll      if @type == 'Fudge'
       return standard_roll   if @bonus.nil? && @malus.nil?
       return roll_with_bonus if @malus.nil?
       return roll_with_malus if @bonus.nil?
@@ -34,7 +34,7 @@ module RpgTools
 
     def fudge_roll
       @rolls += 1
-      @value = rand(1..3) - 2
+      @value = (rand(1..3) - 2)
     end
 
     def standard_roll
