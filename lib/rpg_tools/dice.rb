@@ -4,6 +4,7 @@ module RpgTools
 
     def initialize(base)
       @base  = base
+      base_check
       @value = nil
       @type  = (@base =~ /^.[fF]$/).nil? ? 'Standard' : 'Fudge'
       @sides = @type == 'Fudge' ? 3 : base.gsub(/^./, '').to_i
@@ -24,6 +25,12 @@ module RpgTools
     def set_modifiers
       @bonus = (@base =~ /[Dd]\d+\+(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\+/, '').to_i
       @malus = (@base =~ /[Dd]\d+\-(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\-/, '').to_i
+    end
+
+    def base_check
+      unless ['d', 'D', 'f', 'F'].include?(@base[0])
+        raise ArgumentError.new("You can only create strandard and fudge dices.")
+      end
     end
 
     def check_sides
