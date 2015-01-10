@@ -17,7 +17,7 @@ module RpgTools
     def hand
       [].tap do |hand|
         until hand.count == 5
-          card = card_pick
+          card = standard_card
           hand << card unless hand.include?(card) || hand.count('Joker') == 2
         end
       end
