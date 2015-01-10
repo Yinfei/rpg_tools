@@ -10,11 +10,10 @@ module RpgTools
     end
 
     def flip
-      @value = rand(2) == 1 ? 'heads' : 'tails'
       @flips += 1
       @heads += 1 if @value == 'heads'
       @tails += 1 if @value == 'tails'
-      @value
+      @value = rand(2) == 1 ? 'heads' : 'tails'
     end
   end
 end
