@@ -26,7 +26,14 @@ module RpgTools
 
     private
 
+    def empty_bag_check(dice_number)
+      if dice_number.zero?
+        raise ArgumentError.new("You can't create an empty bag.")
+      end
+    end
+
     def set_bag_content(dice_number)
+      empty_bag_check(dice_number)
       [].tap do |bag|
         dice_number.times do |dice|
           bag << Dice.new(@base.gsub(/^\d+/, ''))
