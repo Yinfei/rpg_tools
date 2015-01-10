@@ -8,8 +8,8 @@ module RpgTools
       @value = nil
       @type  = (@base =~ /^.[fF]$/).nil? ? 'Standard' : 'Fudge'
       @sides = @type == 'Fudge' ? 3 : base.gsub(/^./, '').to_i
+      sides_check
       @rolls = 0
-      check_sides
       set_modifiers if @type == 'Standard'
     end
 
@@ -22,7 +22,14 @@ module RpgTools
 
     private
 
+    def modifier_check
+      unless @base.gsub(/^[dD]{1}[fF]?\d+|[+-]\d+/, '').empty?
+        raise ArgumentError.new("You can only use + or - as modifiers.")
+      end
+    end
+
     def set_modifiers
+      modifier_check
       @bonus = (@base =~ /[Dd]\d+\+(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\+/, '').to_i
       @malus = (@base =~ /[Dd]\d+\-(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\-/, '').to_i
     end
@@ -33,7 +40,7 @@ module RpgTools
       end
     end
 
-    def check_sides
+    def sides_check
       if [0, 1].include?(@sides)
         raise ArgumentError.new("You can't create dices with less than 2 sides.")
       end
