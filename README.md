@@ -31,7 +31,7 @@ it also accepts modifiers like '+X' or '-X' to alter the roll result.
 
 * You can only create standard dice and fudge dice bags.
 
-  `RpgTools::DiceBag.new("4d6-2)` will create a bag of four 6 sided dices with a -2 modifier.
+  `RpgTools::DiceBag.new("4d6-2")` will create a bag of four 6 sided dices with a -2 modifier.
 
 * The `roll` method rolls each dice of the bag.
 * The `total` attribute stores the sum of each dice result.
