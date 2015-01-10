@@ -2,36 +2,28 @@ require 'rpg_tools'
 require 'spec_helper'
 
 describe RpgTools::Dice do
-  it "doesn't roll a '0d' dice" do
-    expect(described_class.roll('0d6')).to eq(true)
+  it "doesn't create a 'd0' dice" do
+    expect { described_class.new('d0') }.to raise_error(ArgumentError)
   end
 
-  it "doesn't roll a 'd0' dice" do
-    expect(described_class.roll('1d0')).to eq(true)
+  it "doesn't create a 'd1' dice" do
+    expect { described_class.new('d1') }.to raise_error(ArgumentError)
   end
 
-  it "doesn't roll a 'd1' dice" do
-    expect(described_class.roll('1d1')).to eq(true)
+  it "creates a dice may the 'd' char be capitalized or not" do
+    expect { described_class.new('d6') }.not_to raise_error
+    expect { described_class.new('D6') }.not_to raise_error
   end
 
-  it 'returns the right number of dices' do
-    expect(described_class.roll('2d6').count).to eq(2)
+  it 'creates a dice with a bonus' do
+    expect { described_class.new('d6+2') }.not_to raise_error
   end
 
-  it "rolls a dice may the 'd' char be capitalized or not" do
-    expect(described_class.roll('1d6').count).to eq(1)
-    expect(described_class.roll('1D6').count).to eq(1)
+  it 'creates a dice with a malus' do
+    expect { described_class.new('D6-2') }.not_to raise_error
   end
 
-  it 'rolls a dice with a bonus' do
-    expect(described_class.roll('1d6+2').count).to eq(1)
-  end
-
-  it 'rolls a dice with a malus' do
-    expect(described_class.roll('1D6-2').count).to eq(1)
-  end
-
-  it "doesn't roll a dice with an odd symbol" do
-    expect(described_class.roll('1d6%2')).to eq(true)
+  it "doesn't create a dice with an odd symbol" do
+    expect { described_class.new('d6%2') }.to raise_error(ArgumentError)
   end
 end
