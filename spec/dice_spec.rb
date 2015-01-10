@@ -10,9 +10,18 @@ describe RpgTools::Dice do
     expect { described_class.new('d1') }.to raise_error(ArgumentError)
   end
 
+  it 'creates fudge dices' do
+    expect { described_class.new('df') }.not_to raise_error
+  end
+
   it "creates a dice may the 'd' char be capitalized or not" do
     expect { described_class.new('d6') }.not_to raise_error
     expect { described_class.new('D6') }.not_to raise_error
+  end
+
+  it "creates a dice may the 'f' char be capitalized or not" do
+    expect { described_class.new('dF') }.not_to raise_error
+    expect { described_class.new('Df') }.not_to raise_error
   end
 
   it 'creates a dice with a bonus' do
