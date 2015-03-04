@@ -11,7 +11,11 @@ module RpgTools
 
     def card
       @card_picks += 1
-      @value = joker_pick_check == true ? 'Joker' : standard_card
+      if @type == 54
+        @value = joker_pick_check == true ? 'Joker' : standard_card
+      else
+        @value = standard_card
+      end
     end
 
     def hand
