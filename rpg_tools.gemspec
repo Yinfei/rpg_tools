@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = %q{RpgTools}
-  s.version     = '0.4.1'
+  s.version     = '0.4.2'
   s.author      = 'Yohan Piron'
   s.email       = 'yinfei84@gmail.com'
   s.date        = %q{2015-03-04}
