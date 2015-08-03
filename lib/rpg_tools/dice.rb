@@ -3,39 +3,38 @@ module RpgTools
     attr_accessor :base, :sides, :value, :type, :rolls, :bonus, :malus
 
     def initialize(base)
-      @base  = base
-      base_check
+      @base  = base.upcase
+      @type  = fudge_dice? ? 'Fudge' : 'Standard'
       @value = nil
-      @type  = (@base =~ /^.[fF]$/).nil? ? 'Standard' : 'Fudge'
-      @sides = @type == 'Fudge' ? 3 : base.gsub(/^./, '').to_i
-      sides_check
+      @sides = fudge_dice? ? 3 : base.gsub(/^./, '').to_i
       @rolls = 0
-      set_modifiers if @type == 'Standard'
+
+      dice_validity_check
+      set_modifiers_and_clean_base unless fudge_dice?
     end
 
     def roll
-      return fudge_roll      if @type == 'Fudge'
-      return standard_roll   if @bonus.nil? && @malus.nil?
-      return roll_with_bonus if @malus.nil?
-      return roll_with_malus if @bonus.nil?
+      @rolls += 1
+
+      fudge_dice? ? fudge_roll : standard_roll
     end
+    alias_method :roll!, :roll
 
     private
 
+    def dice_validity_check
+      sides_check
+      base_check
+    end
+
     def modifier_check
-      unless @base.gsub(/^[dD]{1}[fF]?\d+|[+-]\d+/, '').empty?
+      if (@base =~ /^[D]\d+[+-]?\d*/).nil?
         raise ArgumentError.new("You can only use + or - as modifiers.")
       end
     end
 
-    def set_modifiers
-      modifier_check
-      @bonus = (@base =~ /[Dd]\d+\+(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\+/, '').to_i
-      @malus = (@base =~ /[Dd]\d+\-(\d+)/).nil? ? nil : @base.gsub(/[Dd]\d+\-/, '').to_i
-    end
-
     def base_check
-      unless ['d', 'D', 'f', 'F'].include?(@base[0])
+      unless standard_dice? || fudge_dice?
         raise ArgumentError.new("You can only create strandard and fudge dices.")
       end
     end
@@ -46,24 +45,28 @@ module RpgTools
       end
     end
 
+    def set_modifiers_and_clean_base
+      modifier_check
+
+      @bonus = @base.gsub(/[D]\d+\+/, '').to_i
+      @malus = @base.gsub(/[D]\d+\-/, '').to_i
+      @base.gsub!(/[+-]\d+/ , '')
+    end
+
     def fudge_roll
-      @rolls += 1
       @value = (rand(1..3) - 2)
     end
 
     def standard_roll
-      @rolls += 1
-      @value = rand(1..@sides)
+      @value = rand(1..@sides) + @bonus - @malus
     end
 
-    def roll_with_bonus
-      @rolls += 1
-      @value = rand(1..@sides) + @bonus
+    def fudge_dice?
+      @base == 'DF'
     end
 
-    def roll_with_malus
-      @rolls += 1
-      @value = rand(1..@sides) - @malus
+    def standard_dice?
+      @base.gsub(/^D\d*[+-]?[\d]+$/, '').empty?
     end
   end
 end

@@ -3,18 +3,30 @@ module RpgTools
     attr_accessor :value, :flips, :heads, :tails
 
     def initialize
-      @value = nil
-      @flips = 0
-      @heads = 0
-      @tails = 0
+      @value, @flips, @heads, @tails = nil, 0, 0, 0
     end
 
     def flip
       @flips += 1
       @value = rand(2) == 1 ? 'Heads' : 'Tails'
-      @heads += 1 if @value == 'Heads'
-      @tails += 1 if @value == 'Tails'
+      save_result
       @value
+    end
+    alias_method :flip!, :flip
+
+    private
+
+    def save_result
+      @heads += 1 if heads?
+      @tails += 1 if tails?
+    end
+
+    def heads?
+      @value == 'Heads'
+    end
+
+    def tails?
+      @value == 'Tails'
     end
   end
 end
