@@ -35,4 +35,10 @@ describe RpgTools::Dice do
   it "doesn't create a dice with an odd symbol" do
     expect { described_class.new('d6%2') }.to raise_error(ArgumentError)
   end
+
+  it "doesn't create very odd dices" do
+    expect { described_class.new('dDOGE') }.to raise_error(ArgumentError)
+    expect { described_class.new('dfoo') }.to raise_error(ArgumentError)
+    expect { described_class.new('foobarbaz') }.to raise_error(ArgumentError)
+  end
 end

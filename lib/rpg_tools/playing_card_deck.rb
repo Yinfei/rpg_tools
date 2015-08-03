@@ -11,18 +11,24 @@ module RpgTools
 
     def card
       @card_picks += 1
-      if @type == 52
-        @value = joker_pick_check == true ? 'Joker' : standard_card
-      else
-        @value = standard_card
-      end
+
+      @value =
+        if @type == 52
+          joker_picked? ? 'Joker' : standard_card
+        else
+          standard_card
+        end
     end
 
     def hand
       [].tap do |hand|
         until hand.count == 5
           card = standard_card
-          hand << card unless hand.include?(card) || hand.count('Joker') == 2
+
+          unless hand.include?(card) || hand.count('Joker') == 2
+            hand << card
+            @card_picks += 1
+          end
         end
       end
     end
@@ -35,7 +41,7 @@ module RpgTools
       end
     end
 
-    def joker_pick_check
+    def joker_picked?
       [0, 1].include?((0..54).to_a.sample(1).first)
     end
 
@@ -52,7 +58,6 @@ module RpgTools
     end
 
     def standard_card
-      @card_picks += 1
       @value = [number, color].join(' of ')
     end
   end

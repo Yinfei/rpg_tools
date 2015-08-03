@@ -11,15 +11,10 @@ module RpgTools
     end
 
     def roll
-      @dices.each { |dice| dice.roll }
-
-      @set = @dices.each_with_object([]) do |dice, response|
-               response << dice.value
-             end
-
-      @total = @set.inject{ |sum, x| sum + x }
-      @set
+      @set = roll_dices_set
+      calculate_total_and_show_set
     end
+    alias_method :roll!, :roll
 
     private
 
@@ -37,6 +32,21 @@ module RpgTools
           bag << Dice.new(@base.gsub(/^\d+/, ''))
         end
       end
+    end
+
+    def roll_dices_set
+      @dices.each do |dice|
+        dice.roll
+      end
+
+      @dices.each_with_object([]) do |dice, response|
+        response << dice.value
+      end
+    end
+
+    def calculate_total_and_show_set
+      @total = @set.inject{ |sum, x| sum + x }
+      @set
     end
   end
 end

@@ -4,33 +4,37 @@ module RpgTools
 
     def initialize(base)
       @base  = base.upcase
-      @type  = (@base =~ /^.[F]$/).nil? ? 'Standard' : 'Fudge'
+      @type  = fudge_dice? ? 'Fudge' : 'Standard'
       @value = nil
-      @sides = @type == 'Fudge' ? 3 : base.gsub(/^./, '').to_i
+      @sides = fudge_dice? ? 3 : base.gsub(/^./, '').to_i
       @rolls = 0
 
-      set_modifiers if standard_dice?
-      base_check && modifier_check && sides_check
+      dice_validity_check
+      set_modifiers_and_clean_base unless fudge_dice?
     end
 
     def roll
       @rolls += 1
 
-      return fudge_roll if fudge_dice?
-
-      standard_roll
+      fudge_dice? ? fudge_roll : standard_roll
     end
+    alias_method :roll!, :roll
 
     private
 
+    def dice_validity_check
+      sides_check
+      base_check
+    end
+
     def modifier_check
-      unless @base.gsub(/^[D]{1}[F]?\d+|[+-]\d+/, '').empty?
+      if (@base =~ /^[D]\d+[+-]?\d*/).nil?
         raise ArgumentError.new("You can only use + or - as modifiers.")
       end
     end
 
     def base_check
-      unless ['D', 'F'].include?(@base[0])
+      unless standard_dice? || fudge_dice?
         raise ArgumentError.new("You can only create strandard and fudge dices.")
       end
     end
@@ -41,9 +45,12 @@ module RpgTools
       end
     end
 
-    def set_modifiers
-      @bonus = (@base =~ /[D]\d+\+(\d+)/).nil? ? nil : @base.gsub(/[D]\d+\+/, '').to_i
-      @malus = (@base =~ /[D]\d+\-(\d+)/).nil? ? nil : @base.gsub(/[D]\d+\-/, '').to_i
+    def set_modifiers_and_clean_base
+      modifier_check
+
+      @bonus = @base.gsub(/[D]\d+\+/, '').to_i
+      @malus = @base.gsub(/[D]\d+\-/, '').to_i
+      @base.gsub!(/[+-]\d+/ , '')
     end
 
     def fudge_roll
@@ -55,11 +62,11 @@ module RpgTools
     end
 
     def fudge_dice?
-      @type == 'Fudge'
+      @base == 'DF'
     end
 
     def standard_dice?
-      @type == 'Standard'
+      @base.gsub(/^D\d*[+-]?[\d]+$/, '').empty?
     end
   end
 end
