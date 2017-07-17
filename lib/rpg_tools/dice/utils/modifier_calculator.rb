@@ -13,7 +13,7 @@ module RpgTools
 
         def recalculate
           modifier_operations.each do |operator, value|
-            eval("@total #{operator}= #{value}")
+            @total = @total.send(operator, value.to_i)
           end
 
           @total
@@ -26,7 +26,8 @@ module RpgTools
         end
 
         def unprocessable_modifiers
-          raise ArgumentError.new('Modifiers must be made of both an operator and a numeral value.')
+          raise ArgumentError,
+                'Modifiers require both an operator and a numerical value.'
         end
 
         def malformed_modifiers?

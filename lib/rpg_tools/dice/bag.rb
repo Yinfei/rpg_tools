@@ -1,6 +1,12 @@
 module RpgTools
   module Dice
     class Bag
+      NOTATIONS ||= {
+        'D' => Numeral,
+        'D%' => Percentile,
+        'DF' => Fudge
+      }.freeze
+
       attr_accessor :dice_hash, :content, :modifiers, :value
 
       def initialize(base)
@@ -21,7 +27,7 @@ module RpgTools
 
         @total = Utils::ModifierCalculator.new(@total, modifiers).recalculate
       end
-      alias_method :roll!, :roll
+      alias roll! roll
 
       private
 
@@ -36,15 +42,7 @@ module RpgTools
       end
 
       def dice_klass
-        dice_notations[type]
-      end
-
-      def dice_notations
-        {
-          'D'  => Numeral,
-          'D%' => Percentile,
-          'DF' => Fudge
-        }
+        NOTATIONS[type]
       end
 
       def type
@@ -55,13 +53,12 @@ module RpgTools
         dice_hash[:sides]
       end
 
-
       def quantity
         dice_hash[:quantity]
       end
 
       def invalid_dice!
-        raise ArgumentError.new('Unsupported dice type.')
+        raise ArgumentError, 'Unsupported dice type.'
       end
     end
   end

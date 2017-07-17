@@ -28,7 +28,9 @@ module RpgTools
       end
 
       def check_sides
-        raise ArgumentError.new('Your dice must have at least three sides.') if not_enough_sides
+        if not_enough_sides
+          raise ArgumentError, 'Your dice must have at least three sides.'
+        end
       end
 
       def not_enough_sides

@@ -38,7 +38,7 @@ module RpgTools
         end
 
         def quantity_error!
-          raise ArgumentError.new('You must specify a dice quantity.')
+          raise ArgumentError, 'You must specify a dice quantity.'
         end
       end
     end
