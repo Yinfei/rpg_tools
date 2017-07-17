@@ -2,7 +2,7 @@ module RpgTools
   module Dice
     class Bag
       NOTATIONS ||= {
-        'D' => Numeral,
+        'D'  => Numerical,
         'D%' => Percentile,
         'DF' => Fudge
       }.freeze

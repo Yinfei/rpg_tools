@@ -1,7 +1,7 @@
 require 'rpg_tools'
 require 'spec_helper'
 
-describe RpgTools::Dice::Numeral do
+describe RpgTools::Dice::Numerical do
   let(:dice) { described_class.new(10) }
 
   describe '#roll_calculation' do

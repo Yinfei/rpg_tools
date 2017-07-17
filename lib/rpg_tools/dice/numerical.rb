@@ -1,6 +1,6 @@
 module RpgTools
   module Dice
-    class Numeral < Base
+    class Numerical < Base
       def roll_calculation
         rand(1..sides)
       end

@@ -32,7 +32,7 @@ module RpgTools
 
         def malformed_modifiers?
           no_operator_at_modifier_beginning? ||
-            no_numeral_at_modifier_end? ||
+            no_number_at_modifier_end? ||
             multiple_successive_operators?
         end
 
@@ -40,7 +40,7 @@ module RpgTools
           @modifiers.match(/^\D/).nil?
         end
 
-        def no_numeral_at_modifier_end?
+        def no_number_at_modifier_end?
           @modifiers.match(/\d+$/).nil?
         end
 

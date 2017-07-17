@@ -39,7 +39,7 @@ describe RpgTools::Dice::Utils::ModifierCalculator do
       expect(dice.send(:malformed_modifiers?)).to be(true)
     end
 
-    it 'returns true if there is no numeral at modifiers end' do
+    it 'returns true if there is no number at modifiers end' do
       dice.modifiers = '+3-'
 
       expect(dice.send(:malformed_modifiers?)).to be(true)
@@ -70,15 +70,15 @@ describe RpgTools::Dice::Utils::ModifierCalculator do
     end
   end
 
-  describe '#no_numeral_at_modifier_end?' do
-    it 'returns true if there is no numeral at modifiers end' do
+  describe '#no_number_at_modifier_end?' do
+    it 'returns true if there is no number at modifiers end' do
       dice.modifiers = '+3-'
 
-      expect(dice.send(:no_numeral_at_modifier_end?)).to be(true)
+      expect(dice.send(:no_number_at_modifier_end?)).to be(true)
     end
 
     it 'returs false otherwise' do
-      expect(dice.send(:no_numeral_at_modifier_end?)).to be(false)
+      expect(dice.send(:no_number_at_modifier_end?)).to be(false)
     end
   end
 

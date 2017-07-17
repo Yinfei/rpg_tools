@@ -17,7 +17,7 @@ To a simple integer result, you can use the following Module method :
 `RpgTools.roll_dice(arg)` <i>(`arg` is case insensitive)</i>.
 
 * It can be a stardard dice like `"1dX"` for a X sided dice,
-it also accepts miltiple chained modifiers like "+X", "-X" or "/X", to alter the roll result.
+it also accepts multiple chained modifiers like "+X", "-X" or "/X", to alter the roll result.
 
   `RpgTools.roll_dice("4d6+2")` will create 4 6-sided dices , roll them and add 2 to the
   sum of the roll result.
@@ -28,7 +28,7 @@ it also accepts miltiple chained modifiers like "+X", "-X" or "/X", to alter the
 
 You can also manipulate all those dice types as objects :
 
-* `RpgTools::Dice::Numeral`
+* `RpgTools::Dice::Numerical`
 * `RpgTools::Dice::Fudge`
 * `RpgTools::Dice::Percentile`
 
