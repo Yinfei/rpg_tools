@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
-  s.name        = %q{RpgTools}
+  s.name        = %q{rpg_tools}
   s.version     = '1.0.0'
   s.author      = 'Yohan Piron'
   s.email       = 'yinfei84@gmail.com'
   s.date        = '2015-08-03'
-  s.summary     = 'RpgTools is a toolbox for tabletop games and RPGs'
-  s.description = 'RpgTools gives you tools for your RPGs : dices, coins, cards...'
+  s.summary     = 'rpg_tools is a toolbox for tabletop games and RPGs'
+  s.description = 'rpg_tools gives you tools for your RPGs : dices, coins, cards...'
   s.homepage    = 'https://github.com/Yinfei/rpg_tools.git'
   s.license     = 'MIT'
   s.files       = `git ls-files`.split("\n")

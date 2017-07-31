@@ -1,4 +1,4 @@
-RpgTools [![Dependency Status](https://gemnasium.com/Yinfei/rpg_tools.svg)](https://gemnasium.com/Yinfei/rpg_tools) ![](https://circleci.com/gh/Yinfei/rpg_tools.svg?&style=shield&circle-token=f5153100f0a56438602b915cf95d80f1e6e0edca)
+rpg_tools [![Dependency Status](https://gemnasium.com/Yinfei/rpg_tools.svg)](https://gemnasium.com/Yinfei/rpg_tools) ![](https://circleci.com/gh/Yinfei/rpg_tools.svg?&style=shield&circle-token=f5153100f0a56438602b915cf95d80f1e6e0edca)
 =======
 
 A gem that gives you tools for your RPGs : dices, coins and playing cards !
