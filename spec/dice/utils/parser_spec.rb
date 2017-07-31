@@ -16,7 +16,7 @@ describe RpgTools::Dice::Utils::Parser do
   end
 
   describe '#handle' do
-    it 'builds a hash based on a mathcing pattern' do
+    it 'builds a hash based on a matching pattern' do
       hash = described_class.new('3DF+4').handle
 
       expect(hash[:quantity]).to eq(3)
