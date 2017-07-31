@@ -6,4 +6,5 @@ module RpgTools
   def roll_dice(dice)
     Dice::Bag.new(dice).roll
   end
+  module_function :roll_dice
 end
