@@ -1,10 +1,11 @@
 module RpgTools
   module Dice
     class Base
-      attr_accessor :sides, :value, :rolls
+      attr_accessor :sides, :modifiers, :value, :rolls
 
-      def initialize(sides = 0)
+      def initialize(sides = 0, modifiers = '')
         @sides = sides.zero? ? sides_count : sides
+        @modifiers = modifiers
         @value = 0
         @rolls = 0
 
@@ -14,10 +15,20 @@ module RpgTools
       def roll
         @rolls += 1
 
-        @value = roll_calculation
+        @value = perform_roll
       end
 
       private
+
+      def perform_roll
+        return roll_calculation if @modifiers.empty?
+
+        roll_with_modifiers
+      end
+
+      def roll_with_modifiers
+        Utils::ModifierCalculator.new(roll_calculation, @modifiers).recalculate
+      end
 
       def roll_calculation
         raise NotImplementedError
